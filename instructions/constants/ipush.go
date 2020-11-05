@@ -1,9 +1,9 @@
 package constants
 
-import "jvmgo/instructions/base"
-import "jvmgo/rtda"
+import "jvmgo/ch05/instructions/base"
+import "jvmgo/ch05/rtda"
 
-//Push byte
+// Push byte
 type BIPUSH struct {
 	val int8
 }
@@ -11,8 +11,7 @@ type BIPUSH struct {
 func (self *BIPUSH) FetchOperands(reader *base.BytecodeReader) {
 	self.val = reader.ReadInt8()
 }
-
-func (self *BIPUSH) Excute(frame *rtda.Frame) {
+func (self *BIPUSH) Execute(frame *rtda.Frame) {
 	i := int32(self.val)
 	frame.OperandStack().PushInt(i)
 }
