@@ -1,35 +1,34 @@
 package math
 
-import "math"
 import "myjvm/instructions/base"
 import "myjvm/rtda"
 
-// Remainder double
-type DREM struct{ base.NoOperandsInstruction }
+// Divide double
+type DDIV struct{ base.NoOperandsInstruction }
 
-func (self *DREM) Execute(frame *rtda.Frame) {
+func (self *DDIV) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	v2 := stack.PopDouble()
 	v1 := stack.PopDouble()
-	result := math.Mod(v1, v2) // todo
+	result := v1 / v2
 	stack.PushDouble(result)
 }
 
-// Remainder float
-type FREM struct{ base.NoOperandsInstruction }
+// Divide float
+type FDIV struct{ base.NoOperandsInstruction }
 
-func (self *FREM) Execute(frame *rtda.Frame) {
+func (self *FDIV) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	v2 := stack.PopFloat()
 	v1 := stack.PopFloat()
-	result := float32(math.Mod(float64(v1), float64(v2))) // todo
+	result := v1 / v2
 	stack.PushFloat(result)
 }
 
-// Remainder int
-type IREM struct{ base.NoOperandsInstruction }
+// Divide int
+type IDIV struct{ base.NoOperandsInstruction }
 
-func (self *IREM) Execute(frame *rtda.Frame) {
+func (self *IDIV) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	v2 := stack.PopInt()
 	v1 := stack.PopInt()
@@ -37,14 +36,14 @@ func (self *IREM) Execute(frame *rtda.Frame) {
 		panic("java.lang.ArithmeticException: / by zero")
 	}
 
-	result := v1 % v2
+	result := v1 / v2
 	stack.PushInt(result)
 }
 
-// Remainder long
-type LREM struct{ base.NoOperandsInstruction }
+// Divide long
+type LDIV struct{ base.NoOperandsInstruction }
 
-func (self *LREM) Execute(frame *rtda.Frame) {
+func (self *LDIV) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	v2 := stack.PopLong()
 	v1 := stack.PopLong()
@@ -52,6 +51,6 @@ func (self *LREM) Execute(frame *rtda.Frame) {
 		panic("java.lang.ArithmeticException: / by zero")
 	}
 
-	result := v1 % v2
+	result := v1 / v2
 	stack.PushLong(result)
 }

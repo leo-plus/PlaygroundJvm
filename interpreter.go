@@ -1,24 +1,24 @@
 package main
 
 import "fmt"
-import "jvmgo/classfile"
-import "jvmgo/instructions/base"
-import "jvmgo/rtda"
+import "myjvm/classfile"
+import "myjvm/instructions"
+import "myjvm/instructions/base"
+import "myjvm/rtda"
 
-func interpret(methodInfo *classFile.MemberInfo) {
+func interpret(methodInfo *classfile.MemberInfo) {
 	codeAttr := methodInfo.CodeAttribute()
 	maxLocals := codeAttr.MaxLocals()
 	maxStack := codeAttr.MaxStack()
-	byteCode := codeAttr.Code()
+	bytecode := codeAttr.Code()
 
-	thread: =rtda.NewThread()
-	frame := thread.NewFrame(maxLocals,maxStack)
+	thread := rtda.NewThread()
+	frame := thread.NewFrame(maxLocals, maxStack)
 	thread.PushFrame(frame)
+
 	defer catchErr(frame)
-	loop(thread,byteCode)
-
+	loop(thread, bytecode)
 }
-
 
 func catchErr(frame *rtda.Frame) {
 	if r := recover(); r != nil {
@@ -27,7 +27,6 @@ func catchErr(frame *rtda.Frame) {
 		panic(r)
 	}
 }
-
 
 func loop(thread *rtda.Thread, bytecode []byte) {
 	frame := thread.PopFrame()

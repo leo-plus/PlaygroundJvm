@@ -1,7 +1,7 @@
 package stack
 
-import "jvmgo/ch05/instructions/base"
-import "jvmgo/ch05/rtda"
+import "myjvm/instructions/base"
+import "myjvm/rtda"
 
 // Swap the top two operand stack values
 type SWAP struct{ base.NoOperandsInstruction }

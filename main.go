@@ -1,11 +1,9 @@
 package main
 
-import (
-	"fmt"
-	"jvmgo/classfile"
-	"jvmgo/classpath"
-	"strings"
-)
+import "fmt"
+import "strings"
+import "myjvm/classfile"
+import "myjvm/classpath"
 
 func main() {
 	cmd := parseCmd()
@@ -20,14 +18,14 @@ func main() {
 }
 
 func startJVM(cmd *Cmd) {
-	cp := classpath.Parse(cmd.XjreOption, cmd, cpOption)
+	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
 	className := strings.Replace(cmd.class, ".", "/", -1)
 	cf := loadClass(className, cp)
 	mainMethod := getMainMethod(cf)
 	if mainMethod != nil {
 		interpret(mainMethod)
 	} else {
-		fmt.Printf("Main method notfound in class %s\n", cmd.class)
+		fmt.Printf("Main method not found in class %s\n", cmd.class)
 	}
 }
 
@@ -37,21 +35,19 @@ func loadClass(className string, cp *classpath.Classpath) *classfile.ClassFile {
 		panic(err)
 	}
 
-	cf.err := classfile.Parse(classData)
-	if(err != nil){
+	cf, err := classfile.Parse(classData)
+	if err != nil {
 		panic(err)
 	}
 
 	return cf
 }
 
-func getMainMethod(cf *classfile.ClassFile) *classfile.MemberInfo{
-	for _,m := range cf.Methods(){
-		if m.Name() == "main" && m.Descriptor == "([Ljava/lang/String;]V)"{
-			return m	
+func getMainMethod(cf *classfile.ClassFile) *classfile.MemberInfo {
+	for _, m := range cf.Methods() {
+		if m.Name() == "main" && m.Descriptor() == "([Ljava/lang/String;)V" {
+			return m
 		}
 	}
-
 	return nil
 }
-

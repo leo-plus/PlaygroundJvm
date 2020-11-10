@@ -1,7 +1,7 @@
 package comparisons
 
-import "jvmgo/instructions/base"
-import "jvmgo/rtda"
+import "myjvm/instructions/base"
+import "myjvm/rtda"
 
 // Branch if int comparison with zero succeeds
 type IFEQ struct{ base.BranchInstruction }

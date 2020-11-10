@@ -9,9 +9,9 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${fileDirname}",
+            "program": "/Users/lizhaojun/Documents/CODE/PlayGroundJvm/src/myjvm",
             "env": {},
-            "args": ["test"]
+            "args": ["-Xjre /Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home -cp"]
         }
     ]
 }

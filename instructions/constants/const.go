@@ -1,7 +1,7 @@
 package constants
 
-import "jvmgo/instructions/base"
-import "jvmgo/rtda"
+import "myjvm/instructions/base"
+import "myjvm/rtda"
 
 // Push null
 type ACONST_NULL struct {

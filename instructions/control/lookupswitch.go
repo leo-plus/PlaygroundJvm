@@ -1,7 +1,7 @@
 package control
 
-import "jvmgo/instructions/base"
-import "jvmgo/rtda"
+import "myjvm/instructions/base"
+import "myjvm/rtda"
 
 /*
 lookupswitch
