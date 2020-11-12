@@ -1,6 +1,5 @@
 package heap
 
-import "fmt"
 import "myjvm/classfile"
 
 type Constant interface{}
