@@ -4,9 +4,8 @@ import "myjvm/instructions/base"
 import "myjvm/rtda"
 import "myjvm/rtda/heap"
 
-type NEW struct {
-	base.Index16Instruction
-}
+// Create new object
+type NEW struct{ base.Index16Instruction }
 
 func (self *NEW) Execute(frame *rtda.Frame) {
 	cp := frame.Method().Class().ConstantPool()

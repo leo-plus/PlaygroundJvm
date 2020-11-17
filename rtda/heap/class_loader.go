@@ -4,9 +4,16 @@ import "fmt"
 import "myjvm/classfile"
 import "myjvm/classpath"
 
+/*
+class names:
+    - primitive types: boolean, byte, int ...
+    - primitive arrays: [Z, [B, [I ...
+    - non-array classes: java/lang/Object ...
+    - array classes: [Ljava/lang/Object; ...
+*/
 type ClassLoader struct {
 	cp       *classpath.Classpath
-	classMap map[string]*Class //loaded class
+	classMap map[string]*Class // loaded classes
 }
 
 func NewClassLoader(cp *classpath.Classpath) *ClassLoader {
@@ -18,28 +25,30 @@ func NewClassLoader(cp *classpath.Classpath) *ClassLoader {
 
 func (self *ClassLoader) LoadClass(name string) *Class {
 	if class, ok := self.classMap[name]; ok {
-		return class // 已加载类
+		// already loaded
+		return class
 	}
 
-	return self.loadNoArrayClass(name)
+	return self.loadNonArrayClass(name)
 }
 
-func (self *ClassLoader) loadNoArrayClass(name string) *Class {
+func (self *ClassLoader) loadNonArrayClass(name string) *Class {
 	data, entry := self.readClass(name)
 	class := self.defineClass(data)
 	link(class)
-	fmt.Printf("[Load %s from %s]\n", name, entry)
+	fmt.Printf("[Loaded %s from %s]\n", name, entry)
 	return class
 }
 
 func (self *ClassLoader) readClass(name string) ([]byte, classpath.Entry) {
 	data, entry, err := self.cp.ReadClass(name)
 	if err != nil {
-		panic("java.lang.ClassNotFoundException:" + name)
+		panic("java.lang.ClassNotFoundException: " + name)
 	}
 	return data, entry
 }
 
+// jvms 5.3.5
 func (self *ClassLoader) defineClass(data []byte) *Class {
 	class := parseClass(data)
 	class.loader = self
@@ -52,18 +61,18 @@ func (self *ClassLoader) defineClass(data []byte) *Class {
 func parseClass(data []byte) *Class {
 	cf, err := classfile.Parse(data)
 	if err != nil {
-		panic("java.lang.ClassFormateError")
+		//panic("java.lang.ClassFormatError")
+		panic(err)
 	}
-
 	return newClass(cf)
 }
 
+// jvms 5.4.3.1
 func resolveSuperClass(class *Class) {
 	if class.name != "java/lang/Object" {
 		class.superClass = class.loader.LoadClass(class.superClassName)
 	}
 }
-
 func resolveInterfaces(class *Class) {
 	interfaceCount := len(class.interfaceNames)
 	if interfaceCount > 0 {
@@ -95,7 +104,6 @@ func calcInstanceFieldSlotIds(class *Class) {
 	if class.superClass != nil {
 		slotId = class.superClass.instanceSlotCount
 	}
-
 	for _, field := range class.fields {
 		if !field.IsStatic() {
 			field.slotId = slotId
@@ -105,7 +113,6 @@ func calcInstanceFieldSlotIds(class *Class) {
 			}
 		}
 	}
-
 	class.instanceSlotCount = slotId
 }
 
@@ -137,6 +144,7 @@ func initStaticFinalVar(class *Class, field *Field) {
 	cp := class.constantPool
 	cpIndex := field.ConstValueIndex()
 	slotId := field.SlotId()
+
 	if cpIndex > 0 {
 		switch field.Descriptor() {
 		case "Z", "B", "C", "S", "I":
@@ -145,7 +153,6 @@ func initStaticFinalVar(class *Class, field *Field) {
 		case "J":
 			val := cp.GetConstant(cpIndex).(int64)
 			vars.SetLong(slotId, val)
-
 		case "F":
 			val := cp.GetConstant(cpIndex).(float32)
 			vars.SetFloat(slotId, val)
@@ -153,7 +160,7 @@ func initStaticFinalVar(class *Class, field *Field) {
 			val := cp.GetConstant(cpIndex).(float64)
 			vars.SetDouble(slotId, val)
 		case "Ljava/lang/String;":
-			panic("todo") //ch08实现
+			panic("todo")
 		}
 	}
 }

@@ -4,68 +4,52 @@ import "myjvm/instructions/base"
 import "myjvm/rtda"
 
 // Push null
-type ACONST_NULL struct {
-	base.NoOperandsInstruction
-}
+type ACONST_NULL struct{ base.NoOperandsInstruction }
 
 func (self *ACONST_NULL) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushRef(nil)
 }
 
 // Push double
-type DCONST_0 struct {
-	base.NoOperandsInstruction
-}
+type DCONST_0 struct{ base.NoOperandsInstruction }
 
 func (self *DCONST_0) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushDouble(0.0)
 }
 
-type DCONST_1 struct {
-	base.NoOperandsInstruction
-}
+type DCONST_1 struct{ base.NoOperandsInstruction }
 
 func (self *DCONST_1) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushDouble(1.0)
 }
 
-//Push float
-type FCONST_0 struct {
-	base.NoOperandsInstruction
-}
+// Push float
+type FCONST_0 struct{ base.NoOperandsInstruction }
 
 func (self *FCONST_0) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushFloat(0.0)
 }
 
-type FCONST_1 struct {
-	base.NoOperandsInstruction
-}
+type FCONST_1 struct{ base.NoOperandsInstruction }
 
 func (self *FCONST_1) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushFloat(1.0)
 }
 
-type FCONST_2 struct {
-	base.NoOperandsInstruction
-}
+type FCONST_2 struct{ base.NoOperandsInstruction }
 
 func (self *FCONST_2) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushFloat(2.0)
 }
 
-//Push int constant
-type ICONST_M1 struct {
-	base.NoOperandsInstruction
-}
+// Push int constant
+type ICONST_M1 struct{ base.NoOperandsInstruction }
 
 func (self *ICONST_M1) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushInt(-1)
 }
 
-type ICONST_0 struct {
-	base.NoOperandsInstruction
-}
+type ICONST_0 struct{ base.NoOperandsInstruction }
 
 func (self *ICONST_0) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushInt(0)

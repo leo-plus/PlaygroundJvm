@@ -1,9 +1,7 @@
 package classpath
 
-import (
-	"errors"
-	"strings"
-)
+import "errors"
+import "strings"
 
 type CompositeEntry []Entry
 
