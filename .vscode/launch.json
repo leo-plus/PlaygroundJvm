@@ -11,7 +11,9 @@
             "mode": "auto",
             "program": "/Users/lizhaojun/Documents/CODE/PlayGroundJvm/src/myjvm",
             "env": {},
-            "args": ["-Xjre /Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home -cp /Users/lizhaojun/Downloads/GaussTest.class"]
+            "args": ["-Xjre","/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre",
+                "-cp","/Users/lizhaojun/Documents/CODE/PlayGroundJvm",
+                "jvmgo.book.ch06.MyObject"]
         }
     ]
 }
