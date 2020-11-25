@@ -13,9 +13,7 @@
             "env": {},
             "args": ["-Xjre","/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre",
                 "-cp","/Users/lizhaojun/Documents/CODE/PlayGroundJvm",
-                "jvmgo.book.ch08.PrintArgs",
-                "foo",
-                "你好"
+                "jvmgo.book.ch09.StringTest"
             ]
         }
     ]
