@@ -34,7 +34,9 @@ func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {
 		ref.Class() != currentClass &&
 		!ref.Class().IsSubClassOf(currentClass) {
 
-		panic("java.lang.IllegalAccessError")
+		if !(ref.Class().IsArray() && resolvedMethod.Name() == "clone") {
+			panic("java.lang.IllegalAccessError")
+		}
 	}
 
 	methodToBeInvoked := heap.LookupMethodInClass(ref.Class(),
