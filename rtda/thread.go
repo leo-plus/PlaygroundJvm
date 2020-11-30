@@ -43,9 +43,15 @@ func (self *Thread) CurrentFrame() *Frame {
 func (self *Thread) TopFrame() *Frame {
 	return self.stack.top()
 }
+func (self *Thread) GetFrames() []*Frame {
+	return self.stack.getFrames()
+}
 
 func (self *Thread) IsStackEmpty() bool {
 	return self.stack.isEmpty()
+}
+func (self *Thread) ClearStack() {
+	self.stack.clear()
 }
 
 func (self *Thread) NewFrame(method *heap.Method) *Frame {
